@@ -1,0 +1,25 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+}
+.productsContainer {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 12px;
+}
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+#id {
+  text-decoration-line: overline;
+}
