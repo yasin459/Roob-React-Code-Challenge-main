@@ -1,8 +1,7 @@
-import "./basketCard.css";
-import RemoveIcon from "@mui/icons-material/Remove";
 import PropTypes from "prop-types";
 import { Button } from "../button";
-function Card(props) {
+import "./basketCard.css";
+function BasketCard(props) {
   const { title, img, price, discount, handelDelete, count } = props;
   const discountedPrice = price * ((100 - discount) / 100);
   return (
@@ -13,16 +12,16 @@ function Card(props) {
         <div>${discountedPrice.toFixed(2)}</div>
         <div className="basket-count">
           <div>{count} item</div>
-          <Button onClick={handelDelete}  >remove</Button>
+          <Button onClick={handelDelete}>remove</Button>
         </div>
       </div>
     </div>
   );
 }
 
-export default Card;
+export default BasketCard;
 
-Card.propTypes = {
+BasketCard.propTypes = {
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   discount: PropTypes.number.isRequired,

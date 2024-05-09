@@ -1,6 +1,6 @@
 import "./empty.css";
 import React from "react";
-import emptyCart from "../../assets/empty-cart.png";
+import emptyCart from "../../../assets/empty-cart.png";
 
 type PropsType = {
   description?: string;

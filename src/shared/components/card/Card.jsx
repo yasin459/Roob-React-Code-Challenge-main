@@ -1,8 +1,7 @@
-import "./card.css";
 import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
 import PropTypes from "prop-types";
 import { Button } from "../button";
+import "./card.css";
 function Card(props) {
   const { title, img, description, price, discount, count, select } = props;
   const discountedPrice = price * ((100 - discount) / 100);
