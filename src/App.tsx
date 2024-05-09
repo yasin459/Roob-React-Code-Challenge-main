@@ -6,7 +6,10 @@ import { Button } from "./components/button";
 import { Card } from "./components/card";
 import { Input } from "./components/input";
 import { useDebounce } from "@uidotdev/usehooks";
-
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import Popover from "@mui/material/Popover";
+import { BasketCard } from "./components/basketCard";
+import { Empty } from "./components/empty/Empty";
 type Product = {
   id: number;
   title: string;
@@ -27,8 +30,18 @@ type ProductResponse = {
   skip: number;
   total: number;
 };
+
+type Basket = Record<
+  string,
+  {
+    product: Product;
+    count: number;
+  }
+>;
 function App() {
   const [page, setPage] = React.useState(0);
+  const [basket, setBasket] = React.useState<Basket>({});
+  const [filter, setFilter] = React.useState<string | undefined>(undefined);
 
   const getProducts = async (
     skip: number,
@@ -41,9 +54,7 @@ function App() {
     );
     return res.json();
   };
-  const [filter, setFilter] = React.useState(undefined);
   const debouncedFilter = useDebounce<string | undefined>(filter, 500);
-
   const {
     data: products,
     isLoading,
@@ -59,14 +70,76 @@ function App() {
     setPage(page);
   };
   const handleFilter = (e) => setFilter(e.target.value);
+  const handleAdd = (product: Product) => () => {
+    setBasket((prevBasket) => ({
+      ...prevBasket,
+      [product.id]: {
+        product,
+        count: (prevBasket[product.id]?.count ?? 0) + 1,
+      },
+    }));
+  };
+  const handleRemove = (id: number) => () => {
+    setBasket((prevBasket) => {
+      const newBasket = { ...prevBasket };
+      delete newBasket[id];
+      return newBasket;
+    });
+  };
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   if (!products) return <div> not loaded</div>;
   return (
     <>
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <div className="popover">
+          {!basket || Object.keys(basket).length === 0 ? (
+            <Empty />
+          ) : (
+            Object.keys(basket).map((id) => {
+              const product = basket[id].product;
+              return (
+                <BasketCard
+                  img={product.thumbnail}
+                  discount={product.discountPercentage}
+                  price={product.price}
+                  title={product.title}
+                  count={basket[id].count}
+                  handelDelete={handleRemove(product.id)}
+                />
+              );
+            })
+          )}
+        </div>
+      </Popover>
       <div className="header">
         <Input type="text" onChange={handleFilter} />
-        <Button>Click me</Button>
+        <Button onClick={handleClick} disabled={false}>
+          <ShoppingBasketIcon />
+        </Button>
       </div>
-
       <hr />
       <div className="productsContainer">
         {products.products.map((product) => (
@@ -77,6 +150,8 @@ function App() {
             price={product.price}
             title={product.title}
             key={product.id}
+            count={basket[product.id]?.count}
+            select={handleAdd(product)}
           />
         ))}
       </div>

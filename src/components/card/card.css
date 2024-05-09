@@ -42,3 +42,14 @@ img {
 .price {
   text-decoration: line-through;
 }
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--card-content-color);
+  font-size: 16px;
+  text-align: start;
+  > p {
+    margin: 0;
+  }
+}

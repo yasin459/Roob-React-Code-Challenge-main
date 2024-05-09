@@ -23,3 +23,9 @@
 #id {
   text-decoration-line: overline;
 }
+.basket-header{
+  padding: 12px 12px 0px 12px
+}
+.popover{
+  width: 400px
+}

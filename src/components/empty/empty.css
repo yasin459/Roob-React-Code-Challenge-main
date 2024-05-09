@@ -1,0 +1,12 @@
+.empty {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  justify-content: space-between;
+}
+.emptyCart {
+  width: 80px;
+  height: 80px;
+}
