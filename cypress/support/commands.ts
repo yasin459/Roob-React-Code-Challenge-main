@@ -1,4 +1,22 @@
 /// <reference types="cypress" />
+
+declare namespace Cypress {
+  interface Chainable {
+    getByCyId: (
+      dataCy: string,
+      options?: Cypress.Timeoutable
+    ) => Cypress.Chainable<JQuery<HTMLElement>>;
+    moveSliderOneStep: (step?: number) => void;
+  }
+}
+
+Cypress.Commands.add(
+  "getByCyId",
+  (dataCy: string, options?: Cypress.Timeoutable) => {
+    return cy.get(`[data-cy=${dataCy}]`, options);
+  }
+);
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
