@@ -35,8 +35,12 @@ export const Header = (props: PropsType) => {
         anchorEl={anchorEl}
       />
       <div className="header">
-        <Input type="text" onChange={props.handleFilter} />
-        <Button onClick={handleClick} disabled={false}>
+        <Input
+          dataCy="field-search"
+          type="text"
+          onChange={props.handleFilter}
+        />
+        <Button dataCy="btn-open-basket" onClick={handleClick} disabled={false}>
           <ShoppingBasketIcon />
         </Button>
       </div>

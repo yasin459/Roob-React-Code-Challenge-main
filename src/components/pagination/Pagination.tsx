@@ -8,6 +8,7 @@ export const Pagination = (props: PropsType) => {
     <div className="paginationContainer">
       {[0, 1, 2].map((pageNumber) => (
         <Button
+          dataCy={`pagination-${pageNumber}`}
           disabled={props.page === pageNumber}
           onClick={props.handleClick(pageNumber)}
         >

@@ -6,17 +6,23 @@ function Card(props) {
   const { title, img, description, price, discount, count, select } = props;
   const discountedPrice = price * ((100 - discount) / 100);
   return (
-    <div className="card">
+    <div data-cy="card" className="card">
       {img ? <img src={img} alt={title} /> : null}
-      <h2 className="card-title">{title}</h2>
-      <p className="card-content">{description}</p>
+      <h2 data-cy="card-title" className="card-title">
+        {title}
+      </h2>
+      <p data-cy="card-content" className="card-content">
+        {description}
+      </p>
       <div className="price-container">
-        <p className="price">${price}</p>
-        <p>${discountedPrice.toFixed(2)}</p>
+        <p data-cy="card-price" className="price">
+          ${price}
+        </p>
+        <p data-cy="card-discounted-price">${discountedPrice.toFixed(2)}</p>
       </div>
       <div className="actions">
-        <p>{count ? `${count} item` : "No Item"}</p>
-        <Button onClick={select}>
+        <p data-cy="card-item-count">{count ? `${count} item` : "No Item"}</p>
+        <Button dataCy={"btn-add"} onClick={select}>
           <AddIcon style={{ color: "white" }} fontSize="medium" />
         </Button>
       </div>
